@@ -1,5 +1,6 @@
-#include <limits>
 #include <cmath>
+
+#include <limits>
 
 #include "gsl_util.hpp"
 
@@ -54,7 +55,7 @@ namespace util {
         /**
          * Construct the sine wave data member.
          */
-        constexpr sine_gen() noexcept {
+        constexpr sine_gen() noexcept : data( {} ) {
             for ( std::size_t i = 0; i < leng; ++i ) {
                 auto ratio = gsl::narrow_cast<long double>( i ) / (long double){ leng };
                 auto angle = (long double){ 2.0 } * pi * ratio;
