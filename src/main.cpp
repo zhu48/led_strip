@@ -2,7 +2,6 @@
 #include <cstdint>
 
 #include <atomic>
-#include <algorithm>
 #include <array>
 #include <chrono>
 
@@ -12,6 +11,7 @@
 #include "periph_pw_bit.hpp"
 #include "ws2812b.hpp"
 #include "pattern_fill.hpp"
+#include "vop.hpp"
 #include "ripple.hpp"
 
 periph::pw_bit* const pwb_1 = (periph::pw_bit*)(intptr_t)0x43C10020;
@@ -19,36 +19,6 @@ periph::pw_bit* const pwb_1 = (periph::pw_bit*)(intptr_t)0x43C10020;
 volatile std::atomic_bool run;
 
 std::chrono::milliseconds next_run_time{ 0 };
-
-template<typename itr_l, typename itr_r, typename itr_sum>
-constexpr void v_sum( itr_sum sum, itr_l l, itr_r r, std::size_t leng ) {
-    for ( std::size_t i = 0; i < leng; ++i, ++l, ++r, ++sum ) {
-        *sum = *l + *r;
-    }
-}
-
-template<typename itr_l, typename itr_r, typename itr_min>
-constexpr void v_min( itr_min min, itr_l l, itr_r r, std::size_t leng ) {
-    for ( std::size_t i = 0; i < leng; ++i, ++l, ++r, ++min ) {
-        *min = std::min( *l, *r );
-    }
-}
-
-template<typename itr, typename scale_type>
-constexpr void v_mult( itr begin, itr end, scale_type s ) {
-    for ( ; begin != end; ++begin ) {
-        *begin *= s;
-    }
-}
-
-template<std::size_t stride, typename itr, typename output_itr>
-constexpr output_itr sample( output_itr out_begin, itr begin, itr end ) {
-    for ( ; std::distance( begin, end ) > stride; begin += stride, ++out_begin ) {
-        *out_begin = *begin;
-    }
-
-    return out_begin;
-}
 
 void iterate() {
     if ( portable::systick::uptime() >= next_run_time ) {

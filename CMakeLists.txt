@@ -53,6 +53,7 @@ set(
     LEDS_INC_FILES
         ${LEDS_INC_DIR}/pattern_fill.hpp
         ${LEDS_INC_DIR}/ripple.hpp
+        ${LEDS_INC_DIR}/vop.hpp
         ${LEDS_INC_DIR}/ws2812b.hpp
 )
 set(
