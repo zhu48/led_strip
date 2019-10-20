@@ -24,7 +24,7 @@ namespace effect {
     void ripple<T,period,num_periods>::iterate( std::size_t n ) noexcept {
         std::array<T,period*num_periods> temp;
         std::rotate_copy( this->cbegin(), this->cbegin() + n, this->cend(), temp.begin() );
-        std::copy( temp.cbegin(), temp.cend(), this->end() );
+        std::copy( temp.cbegin(), temp.cend(), this->begin() );
     }
 
 }
