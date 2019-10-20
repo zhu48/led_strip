@@ -28,9 +28,16 @@ namespace effect {
             using parent_type::crend;
 
             /**
-             * Construct a ripple object.
+             * Construct a ripple object that pulses up to the maximum value of `T`.
              */
             constexpr ripple() noexcept;
+
+            /**
+             * Construct a ripple that pulses up to the given peak value.
+             * 
+             * \param peak The peak value in the ripple wave.
+             */
+            constexpr ripple( T peak ) noexcept;
 
             /**
              * Perform a ripple iteration.

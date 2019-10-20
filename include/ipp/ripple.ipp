@@ -1,7 +1,10 @@
 #include <algorithm>
 #include <limits>
 
+#include "gsl_util.hpp"
+
 #include "pattern_fill.hpp"
+#include "vop.hpp"
 
 namespace effect {
 
@@ -13,6 +16,26 @@ namespace effect {
             std::numeric_limits<T>::max()/2,
             std::numeric_limits<T>::max()/2
         >();
+
+        auto data_itr = this->begin();
+        for ( decltype(num_periods) i = 0; i < num_periods; ++i ) {
+            data_itr = std::copy( single_period.cbegin(), single_period.cend(), data_itr );
+        }
+    }
+
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr ripple<T,period,num_periods>::ripple( T peak ) noexcept {
+        auto single_period = util::sine<
+            T,
+            period,
+            std::numeric_limits<T>::max()/2,
+            std::numeric_limits<T>::max()/2
+        >();
+        vop::mult(
+            single_period.begin(),
+            single_period.end(),
+            gsl::narrow_cast<long double>( peak ) / std::numeric_limits<T>::max()
+        );
 
         auto data_itr = this->begin();
         for ( decltype(num_periods) i = 0; i < num_periods; ++i ) {
