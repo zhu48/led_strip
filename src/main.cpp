@@ -41,6 +41,15 @@ constexpr void v_mult( itr begin, itr end, scale_type s ) {
     }
 }
 
+template<std::size_t stride, typename itr, typename output_itr>
+constexpr output_itr sample( output_itr out_begin, itr begin, itr end ) {
+    for ( ; std::distance( begin, end ) > stride; begin += stride, ++out_begin ) {
+        *out_begin = *begin;
+    }
+
+    return out_begin;
+}
+
 void iterate() {
     if ( portable::systick::uptime() >= next_run_time ) {
         run = true;
