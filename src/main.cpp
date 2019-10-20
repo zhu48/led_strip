@@ -30,14 +30,18 @@ void iterate() {
 int main( int argc, char* argv[] ) {
     portable::systick::init( portable::systick::period_base::us_3, 10, iterate );
 
-    std::array<std::uint8_t,160>      zero = { 0 };
-    effect::ripple<std::uint8_t,40,4> blue;
+    effect::ripple<std::uint8_t,600,5> blue;
+    auto small_wave = util::sine<std::uint8_t,10,10,5>();
+
+    std::array<std::uint8_t,300> zero = { 0 };
+    std::array<std::uint8_t,300> frame_b;
 
     led::ws2812b dev( *pwb_1 );
     while ( true ) {
         if ( run ) {
             blue.iterate( 1 );
-            dev.write_range( zero.cbegin(), zero.cbegin(), blue.cbegin(), blue.size() );
+            vop::sample<10>( frame_b.begin(), blue.cbegin(), blue.cend() );
+            dev.write_range( zero.cbegin(), zero.cbegin(), frame_b.cbegin(), zero.size() );
 
             run = false;
         } else {
