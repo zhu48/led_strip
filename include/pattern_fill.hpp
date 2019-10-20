@@ -19,8 +19,22 @@ namespace util {
     template<typename T, std::size_t leng>
     constexpr std::array<T,leng> triangle() noexcept;
 
-    template<typename T, std::size_t leng>
-    constexpr std::array<T,leng> sine() noexcept;
+    /**
+     * Generate an array containing a single sine wave period.
+     * 
+     * \tparam T         The numeric type the array contains.
+     * \tparam leng      The length of the array.
+     * \tparam amplitude The amplitude of the sine wave.
+     * \tparam offset    The offset of the sine wave.
+     * 
+     * \return Returns an array holding a single sine wave period.
+     */
+    template<
+        typename      T,
+        std::size_t   leng,
+        std::intmax_t amplitude,
+        std::intmax_t offset
+    > constexpr std::array<T,leng> sine() noexcept;
 
 }
 
