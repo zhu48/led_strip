@@ -54,14 +54,18 @@ namespace util {
     struct sine_gen {
         /**
          * Construct the sine wave data member.
+         * 
+         * \param phase The phase offset to begin the wave at.
          */
-        constexpr sine_gen() noexcept : data( {} ) {
+        constexpr sine_gen( std::size_t phase ) noexcept : data( {} ) {
             for ( std::size_t i = 0; i < leng; ++i ) {
-                auto ratio = gsl::narrow_cast<long double>( i ) / (long double){ leng };
-                auto angle = (long double){ 2.0 } * pi * ratio;
+                auto angle_raw =
+                    gsl::narrow_cast<long double>( i ) + gsl::narrow_cast<long double>( phase );
+                auto cycle_ratio = angle_raw / (long double){ leng };
+                auto angle_rad = (long double){ 2.0 } * pi * cycle_ratio;
                 data[i] =
                     gsl::narrow_cast<T>(
-                        (long double){ amplitude } * std::sin( angle ) + (long double){ offset }
+                        (long double){ amplitude } * std::sin( angle_rad ) + (long double){ offset }
                     );
             }
         }
@@ -73,8 +77,8 @@ namespace util {
         std::size_t   leng,
         std::intmax_t amplitude,
         std::intmax_t offset
-    > constexpr std::array<T,leng> sine() noexcept {
-        return sine_gen<T,leng,amplitude,offset>{}.data;
+    > constexpr std::array<T,leng> sine( std::size_t phase ) noexcept {
+        return sine_gen<T,leng,amplitude,offset>( phase ).data;
     }
 
 }

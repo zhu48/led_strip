@@ -27,6 +27,8 @@ namespace util {
      * \tparam amplitude The amplitude of the sine wave.
      * \tparam offset    The offset of the sine wave.
      * 
+     * \param phase The phase offset to begin the wave at.
+     * 
      * \return Returns an array holding a single sine wave period.
      */
     template<
@@ -34,7 +36,7 @@ namespace util {
         std::size_t   leng,
         std::intmax_t amplitude,
         std::intmax_t offset
-    > constexpr std::array<T,leng> sine() noexcept;
+    > constexpr std::array<T,leng> sine( std::size_t phase = 0 ) noexcept;
 
 }
 
