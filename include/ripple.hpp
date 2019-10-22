@@ -1,5 +1,5 @@
-#ifndef EFFECT_HPP
-#define EFFECT_HPP
+#ifndef RIPPLE_HPP
+#define RIPPLE_HPP
 
 #include <cstddef>
 
@@ -51,4 +51,4 @@ namespace effect {
 
 #include "ripple.ipp"
 
-#endif // #ifndef EFFECT_HPP
+#endif // #ifndef RIPPLE_HPP
