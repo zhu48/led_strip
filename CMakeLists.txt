@@ -51,6 +51,7 @@ set(LEDS_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src)
 
 set(
     LEDS_INC_FILES
+        ${LEDS_INC_DIR}/doom_fire.hpp
         ${LEDS_INC_DIR}/pattern_fill.hpp
         ${LEDS_INC_DIR}/ripple.hpp
         ${LEDS_INC_DIR}/vop.hpp
@@ -58,6 +59,7 @@ set(
 )
 set(
     LEDS_INC_FILES
+        ${LEDS_IPP_DIR}/doom_fire.ipp
         ${LEDS_IPP_DIR}/pattern_fill.ipp
         ${LEDS_IPP_DIR}/ripple.ipp
         ${LEDS_IPP_DIR}/ws2812b.ipp
