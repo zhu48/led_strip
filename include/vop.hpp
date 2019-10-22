@@ -35,6 +35,20 @@ namespace vop {
         return out_begin;
     }
 
+    template<std::size_t stride, typename idx_itr, typename val_itr, typename output_itr>
+    constexpr output_itr sample_by_index(
+        output_itr out_begin,
+        idx_itr idx_begin,
+        idx_itr idx_end,
+        val_itr values_begin
+    ) {
+        for ( ; std::distance( idx_begin, idx_end ) > stride; idx_begin += stride, ++out_begin ) {
+            *out_begin = *( values_begin + *idx_begin );
+        }
+
+        return out_begin;
+    }
+
 }
 
 #endif // #ifndef VOP_HPP
