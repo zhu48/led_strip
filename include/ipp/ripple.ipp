@@ -50,4 +50,33 @@ namespace effect {
         std::copy( temp.cbegin(), temp.cend(), this->begin() );
     }
 
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr typename ripple<T,period,num_periods>::const_reference
+    ripple<T,period,num_periods>::at( size_type pos ) const {
+        return parent_type::at( pos );
+    }
+
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr typename ripple<T,period,num_periods>::const_reference
+    ripple<T,period,num_periods>::operator[]( size_type pos ) const {
+        return parent_type::operator[]( pos );
+    }
+
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr typename ripple<T,period,num_periods>::const_reference
+    ripple<T,period,num_periods>::front() const {
+        return parent_type::front();
+    }
+
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr typename ripple<T,period,num_periods>::const_reference
+    ripple<T,period,num_periods>::back() const {
+        return parent_type::back();
+    }
+
+    template<typename T, std::size_t period, std::size_t num_periods>
+    constexpr const T* ripple<T,period,num_periods>::data() const {
+        return parent_type::data();
+    }
+
 }
