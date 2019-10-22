@@ -62,6 +62,7 @@ set(
         ${LEDS_IPP_DIR}/doom_fire.ipp
         ${LEDS_IPP_DIR}/pattern_fill.ipp
         ${LEDS_IPP_DIR}/ripple.ipp
+        ${LEDS_IPP_DIR}/vop.ipp
         ${LEDS_IPP_DIR}/ws2812b.ipp
 )
 set(
