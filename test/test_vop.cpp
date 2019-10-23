@@ -1,8 +1,6 @@
 #include <vector>
 #include <iterator>
 
-#include <gsl_util.hpp>
-
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
@@ -15,7 +13,9 @@ TEST_CASE( "vector sum produces proper sum", "[sum]" ) {
 
     vop::sum( std::back_inserter( result ), lhs.cbegin(), rhs.cbegin(), lhs.size() );
 
-    for ( gsl::index i = 0; i < gsl::narrow_cast<gsl::index>( lhs.size() ); ++i ) {
-        CHECK( result.at( i ) == lhs.at( i ) + rhs.at( i ) );
-    }
+    CHECK( result.at( 0 ) == lhs.at( 0 ) + rhs.at( 0 ) );
+    CHECK( result.at( 1 ) == lhs.at( 1 ) + rhs.at( 1 ) );
+    CHECK( result.at( 2 ) == lhs.at( 2 ) + rhs.at( 2 ) );
+    CHECK( result.at( 3 ) == lhs.at( 3 ) + rhs.at( 3 ) );
+    CHECK( result.at( 4 ) == lhs.at( 4 ) + rhs.at( 4 ) );
 }
