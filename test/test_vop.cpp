@@ -114,6 +114,66 @@ TEST_CASE( "vector minimum produces proper minimum", "[min]" ) {
     }
 }
 
+TEST_CASE( "vector multiply produces proper product", "[mult]" ) {
+    SECTION( "positive integrals" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5 };
+
+        vop::mult( data.begin(), data.end(), 2 );
+
+        CHECK( data.at( 0 ) == 2 );
+        CHECK( data.at( 1 ) == 4 );
+        CHECK( data.at( 2 ) == 6 );
+        CHECK( data.at( 3 ) == 8 );
+        CHECK( data.at( 4 ) == 10 );
+
+        vop::mult( data.begin(), data.end(), -1 );
+
+        CHECK( data.at( 0 ) == -2 );
+        CHECK( data.at( 1 ) == -4 );
+        CHECK( data.at( 2 ) == -6 );
+        CHECK( data.at( 3 ) == -8 );
+        CHECK( data.at( 4 ) == -10 );
+    }
+    SECTION( "negative integrals" ) {
+        std::vector<int> data{ -1, -2, -3, -4, -5 };
+
+        vop::mult( data.begin(), data.end(), 4 );
+
+        CHECK( data.at( 0 ) == -4 );
+        CHECK( data.at( 1 ) == -8 );
+        CHECK( data.at( 2 ) == -12 );
+        CHECK( data.at( 3 ) == -16 );
+        CHECK( data.at( 4 ) == -20 );
+
+        vop::mult( data.begin(), data.end(), -5 );
+
+        CHECK( data.at( 0 ) == 20 );
+        CHECK( data.at( 1 ) == 40 );
+        CHECK( data.at( 2 ) == 60 );
+        CHECK( data.at( 3 ) == 80 );
+        CHECK( data.at( 4 ) == 100 );
+    }
+    SECTION( "mixed-sign integrals" ) {
+        std::vector<int> data{ -1, 2, -3, -4, 5 };
+
+        vop::mult( data.begin(), data.end(), 3 );
+
+        CHECK( data.at( 0 ) == -3 );
+        CHECK( data.at( 1 ) == 6 );
+        CHECK( data.at( 2 ) == -9 );
+        CHECK( data.at( 3 ) == -12 );
+        CHECK( data.at( 4 ) == 15 );
+
+        vop::mult( data.begin(), data.end(), -10 );
+
+        CHECK( data.at( 0 ) == 30 );
+        CHECK( data.at( 1 ) == -60 );
+        CHECK( data.at( 2 ) == 90 );
+        CHECK( data.at( 3 ) == 120 );
+        CHECK( data.at( 4 ) == -150 );
+    }
+}
+
 TEST_CASE( "vector sample produces properly-size result container", "[sample][size]" ) {
     SECTION( "sampled container size is zero" ) {
         std::vector<int> test;
