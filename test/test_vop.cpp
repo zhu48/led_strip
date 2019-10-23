@@ -115,6 +115,14 @@ TEST_CASE( "vector minimum produces proper minimum", "[min]" ) {
 }
 
 TEST_CASE( "vector sample produces properly-size result container", "[sample][size]" ) {
+    SECTION( "sampled container size is zero" ) {
+        std::vector<int> test;
+        std::vector<int> result;
+
+        vop::sample<2>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.size() == 0 );
+    }
     SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
         std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8 };
         std::vector<int> result;
