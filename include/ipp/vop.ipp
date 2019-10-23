@@ -24,8 +24,13 @@ namespace vop {
 
     template<std::size_t stride, typename itr, typename output_itr>
     constexpr output_itr sample( output_itr out_begin, itr begin, itr end ) {
-        for ( ; std::distance( begin, end ) > stride; begin += stride, ++out_begin ) {
+        auto dist = std::distance( begin, end );
+        for ( ; dist >= stride; begin += stride, ++out_begin, dist = std::distance( begin, end ) ) {
             *out_begin = *begin;
+        }
+        if ( dist > 0 ) {
+            *out_begin = *begin;
+            std::advance( out_begin, dist );
         }
 
         return out_begin;
@@ -38,8 +43,17 @@ namespace vop {
         idx_itr idx_end,
         val_itr values_begin
     ) {
-        for ( ; std::distance( idx_begin, idx_end ) > stride; idx_begin += stride, ++out_begin ) {
+        auto dist = std::distance( idx_begin, idx_end );
+        for (
+            ;
+            dist >= stride;
+            idx_begin += stride, ++out_begin, dist = std::distance( idx_begin, idx_end )
+        ) {
             *out_begin = *( values_begin + *idx_begin );
+        }
+        if ( dist > 0 ) {
+            *out_begin = *( values_begin + *idx_begin );
+            std::advance( out_begin, dist );
         }
 
         return out_begin;
