@@ -93,5 +93,6 @@ target_include_directories(
         ${LEDS_INC_DIR}
         ${LEDS_IPP_DIR}
 )
+target_link_libraries(leds_app PUBLIC gsl)
 target_link_libraries(leds_app PUBLIC rpp)
 target_link_libraries(leds_app PUBLIC periph)

@@ -35,6 +35,19 @@ if(NOT DEFINED CMAKE_INTERPROCEDURAL_OPTIMIZATION)
     )
 endif()
 
+######################
+# Derive Directories #
+######################
+
+get_filename_component(REPO_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
+get_filename_component(REPO_CONT_DIR ${REPO_ROOT_DIR} DIRECTORY)
+
+#######################
+# Gather Dependencies #
+#######################
+
+add_subdirectory(${REPO_CONT_DIR}/GSL ${CMAKE_CURRENT_BINARY_DIR}/gsl)
+
 #####################
 # Configure Testing #
 #####################
@@ -42,8 +55,6 @@ endif()
 find_package(Catch2 REQUIRED)
 
 enable_testing()
-
-get_filename_component(REPO_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 
 set(LEDS_INC_DIR ${REPO_ROOT_DIR}/include)
 set(LEDS_IPP_DIR ${LEDS_INC_DIR}/ipp)
@@ -60,5 +71,6 @@ target_include_directories(
         ${LEDS_IPP_DIR}
 )
 target_link_libraries(test_vop Catch2::Catch2)
+target_link_libraries(test_vop gsl)
 
-add_test(NAME vector_ops COMMAND test_vop)
+add_test(NAME vector_ops COMMAND test_vop --out=${CMAKE_CURRENT_LIST_DIR}/test_vop.log)
