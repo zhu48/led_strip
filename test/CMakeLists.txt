@@ -39,23 +39,32 @@ endif()
 # Configure Testing #
 #####################
 
-find_package(Catch2 REQUIRED)
+if(EXISTS ${CATCH_DIR})
+    get_filename_component(REPO_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 
-message(STATUS "Creating test executable targets")
+    set(LEDS_INC_DIR ${REPO_ROOT_DIR}/include)
+    set(LEDS_IPP_DIR ${LEDS_INC_DIR}/ipp)
 
-enable_testing()
+    enable_testing()
 
-# compile vector operations test executable
-add_executable(
-    test_vop
-        ${CMAKE_CURRENT_SOURCE_DIR}/test_vop.cpp
-)
-target_include_directories(
-    test_vop
-    PUBLIC
-        ${LEDS_INC_DIR}
-        ${LEDS_IPP_DIR}
-)
-target_link_libraries(test_vop Catch2::Catch2)
+    add_definitions(-DBUILD_TESTING=OFF)
+    add_subdirectory(${CATCH_DIR} ${CMAKE_CURRENT_BINARY_DIR}/catch)
 
-add_test(NAME vector_ops COMMAND test_vop)
+    # compile vector operations test executable
+    add_executable(
+        test_vop
+            ${CMAKE_CURRENT_SOURCE_DIR}/test_vop.cpp
+    )
+    target_include_directories(
+        test_vop
+        PUBLIC
+            ${LEDS_INC_DIR}
+            ${LEDS_IPP_DIR}
+    )
+    target_link_libraries(test_vop Catch2::Catch2)
+
+    add_test(NAME vector_ops COMMAND test_vop)
+else()
+    message(STATUS "Could not find Catch2 at \"CATCH_DIR\": ${CATCH_DIR}")
+    message(FATAL_ERROR "Define \"CATCH_DIR\" to be the Catch2 repository root directory")
+endif()

@@ -1,4 +1,4 @@
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 
-int main( int argc, char* argv[] ) {
-    return -1;
-}
+#include "vop.hpp"
