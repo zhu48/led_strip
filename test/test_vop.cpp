@@ -139,6 +139,14 @@ TEST_CASE( "vector sample produces properly-size result container", "[sample][si
 
         CHECK( result.size() == 4 );
     }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        std::vector<int> result;
+
+        vop::sample<4>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.size() == 4 );
+    }
 }
 
 TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
@@ -163,5 +171,16 @@ TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
         CHECK( result.at( 1 ) == 4 );
         CHECK( result.at( 2 ) == 7 );
         CHECK( result.at( 3 ) == 10 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        std::vector<int> result;
+
+        vop::sample<4>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 5 );
+        CHECK( result.at( 2 ) == 9 );
+        CHECK( result.at( 3 ) == 13 );
     }
 }
