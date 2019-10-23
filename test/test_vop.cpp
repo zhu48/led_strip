@@ -6,6 +6,16 @@
 
 #include "vop.hpp"
 
+TEST_CASE( "vector sum produces properly-sized result container", "[sum][size]" ) {
+    std::vector<int> lhs{ 1, 2, 3, 4, 5 };
+    std::vector<int> rhs{ 2, 4, 6, 8, 10 };
+    std::vector<int> result;
+
+    vop::sum( std::back_inserter( result ), lhs.cbegin(), rhs.cbegin(), lhs.size() );
+
+    CHECK( result.size() == 5 );
+}
+
 TEST_CASE( "vector sum produces proper sum", "[sum]" ) {
     std::vector<int> lhs{ 1, 2, 3, 4, 5 };
     std::vector<int> rhs{ 2, 4, 6, 8, 10 };
