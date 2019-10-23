@@ -184,3 +184,116 @@ TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
         CHECK( result.at( 3 ) == 13 );
     }
 }
+
+TEST_CASE( "vector by-index sample produces properly-size result container", "[sample][size]" ) {
+    SECTION( "sampled container size is zero" ) {
+        std::vector<int> data;
+        std::vector<std::size_t> test;
+        std::vector<int> result;
+
+        vop::sample_by_index<2>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.size() == 0 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7 };
+        std::vector<int> result;
+
+        vop::sample_by_index<2>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.size() == 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        std::vector<int> result;
+
+        vop::sample_by_index<3>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.size() == 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::vector<int> result;
+
+        vop::sample_by_index<4>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.size() == 4 );
+    }
+}
+
+TEST_CASE( "vector by-index sample produces proper sample array", "[sample]" ) {
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7 };
+        std::vector<int> result;
+
+        vop::sample_by_index<2>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 3 );
+        CHECK( result.at( 2 ) == 5 );
+        CHECK( result.at( 3 ) == 7 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        std::vector<int> result;
+
+        vop::sample_by_index<3>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 4 );
+        CHECK( result.at( 2 ) == 7 );
+        CHECK( result.at( 3 ) == 10 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::vector<int> result;
+
+        vop::sample_by_index<4>(
+            std::back_inserter( result ),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 5 );
+        CHECK( result.at( 2 ) == 9 );
+        CHECK( result.at( 3 ) == 13 );
+    }
+}
