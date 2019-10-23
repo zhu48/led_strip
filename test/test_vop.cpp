@@ -72,7 +72,7 @@ TEST_CASE( "vector minimum produces properly-sized result container", "[min][siz
     }
 }
 
-TEST_CASE( "vector minimum produces proper sum", "[min]" ) {
+TEST_CASE( "vector minimum produces proper minimum", "[min]" ) {
     SECTION( "positive integrals" ) {
         std::vector<int> lhs{ 1, 2, 6, 8, 5 };
         std::vector<int> rhs{ 2, 4, 3, 4, 10 };
