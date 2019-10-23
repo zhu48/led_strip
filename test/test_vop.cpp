@@ -113,3 +113,47 @@ TEST_CASE( "vector minimum produces proper minimum", "[min]" ) {
         CHECK( result.at( 4 ) == -10 );
     }
 }
+
+TEST_CASE( "vector sample produces properly-size result container", "[sample][size]" ) {
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::vector<int> result;
+
+        vop::sample<2>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.size() == 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::vector<int> result;
+
+        vop::sample<3>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.size() == 4 );
+    }
+}
+
+TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::vector<int> result;
+
+        vop::sample<2>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 3 );
+        CHECK( result.at( 2 ) == 5 );
+        CHECK( result.at( 3 ) == 7 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::vector<int> result;
+
+        vop::sample<3>( std::back_inserter( result ), test.cbegin(), test.cend() );
+
+        CHECK( result.at( 0 ) == 1 );
+        CHECK( result.at( 1 ) == 4 );
+        CHECK( result.at( 2 ) == 7 );
+        CHECK( result.at( 3 ) == 10 );
+    }
+}
