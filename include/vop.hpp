@@ -1,7 +1,7 @@
 #ifndef VOP_HPP
 #define VOP_HPP
 
-#include <algorithm>
+#include <cstddef>
 
 namespace vop {
 

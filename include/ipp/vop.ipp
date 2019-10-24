@@ -1,3 +1,4 @@
+#include <algorithm>
 
 namespace vop {
 
