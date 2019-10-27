@@ -31,7 +31,7 @@ namespace vop {
         }
         if ( dist > 0 ) {
             *out_begin = *begin;
-            std::advance( out_begin, dist );
+            ++out_begin;
         }
 
         return out_begin;
@@ -54,7 +54,7 @@ namespace vop {
         }
         if ( dist > 0 ) {
             *out_begin = *( values_begin + *idx_begin );
-            std::advance( out_begin, dist );
+            ++out_begin;
         }
 
         return out_begin;
