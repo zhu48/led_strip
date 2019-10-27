@@ -1,3 +1,4 @@
+#include <array>
 #include <vector>
 #include <iterator>
 
@@ -217,6 +218,54 @@ TEST_CASE( "vector sample produces properly-size result container", "[sample][si
     }
 }
 
+TEST_CASE( "vector sample returns correct iterator", "[sample][retpos]" ) {
+    SECTION( "sampled container size is zero" ) {
+        std::vector<int> test;
+        std::array<int,16> result;
+
+
+        auto end_pos = vop::sample<2>( result.begin(), test.cbegin(), test.cend() );
+
+        CHECK( end_pos == result.begin() );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::array<int,16> result;
+
+
+        auto end_pos = vop::sample<2>( result.begin(), test.cbegin(), test.cend() );
+
+        CHECK( end_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::array<int,16> result;
+
+
+        auto end_pos = vop::sample<3>( result.begin(), test.cbegin(), test.cend() );
+
+        CHECK( end_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus two" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+        std::array<int,16> result;
+
+
+        auto end_pos = vop::sample<3>( result.begin(), test.cbegin(), test.cend() );
+
+        CHECK( end_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::array<int,16> result;
+
+
+        auto end_pos = vop::sample<4>( result.begin(), test.cbegin(), test.cend() );
+
+        CHECK( end_pos == result.begin() + 4 );
+    }
+}
+
 TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
     SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
         std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -323,6 +372,79 @@ TEST_CASE( "vector by-index sample produces properly-size result container", "[s
         );
 
         CHECK( result.size() == 4 );
+    }
+}
+
+TEST_CASE( "vector by-index sample returns correct iterator", "[sample][endpos]" ) {
+    SECTION( "sampled container size is zero" ) {
+        std::vector<int> data;
+        std::vector<std::size_t> test;
+        std::array<int,16> result;
+
+        auto ret_pos = vop::sample_by_index<2>(
+            result.begin(),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( ret_pos == result.begin() );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7 };
+        std::array<int,16> result;
+
+        auto ret_pos = vop::sample_by_index<2>(
+            result.begin(),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( ret_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        std::array<int,16> result;
+
+        auto ret_pos = vop::sample_by_index<3>(
+            result.begin(),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( ret_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride plus two" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        std::array<int,16> result;
+
+        auto ret_pos = vop::sample_by_index<3>(
+            result.begin(),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( ret_pos == result.begin() + 4 );
+    }
+    SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+        std::array<int,16> result;
+
+        auto ret_pos = vop::sample_by_index<4>(
+            result.begin(),
+            test.cbegin(),
+            test.cend(),
+            data.cbegin()
+        );
+
+        CHECK( ret_pos == result.begin() + 4 );
     }
 }
 
