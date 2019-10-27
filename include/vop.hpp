@@ -79,6 +79,8 @@ namespace vop {
      * \param idx_begin    Iterator to the beginning of the index-containing range.
      * \param idx_end      Iterator to one-past-the-end of the index-containing range.
      * \param values_begin Iterator to the beginning of the values range.
+     * 
+     * \return Returns an iterator to the next position in the output range.
      */
     template<std::size_t stride, typename idx_itr, typename val_itr, typename output_itr>
     constexpr output_itr sample_by_index(
