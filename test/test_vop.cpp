@@ -290,7 +290,7 @@ TEST_CASE( "vector sample produces proper sample array", "[sample]" ) {
         CHECK( result.at( 3 ) == 10 );
     }
     SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
-        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        std::vector<int> test{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
         std::vector<int> result;
 
         vop::sample<4>( std::back_inserter( result ), test.cbegin(), test.cend() );
@@ -484,8 +484,8 @@ TEST_CASE( "vector by-index sample produces proper sample array", "[sample]" ) {
         CHECK( result.at( 3 ) == 10 );
     }
     SECTION( "sampled container size is a perfect multiple of the sample stride minus one" ) {
-        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::vector<int> data{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        std::vector<std::size_t> test{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
         std::vector<int> result;
 
         vop::sample_by_index<4>(
