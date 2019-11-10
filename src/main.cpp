@@ -70,28 +70,28 @@ int main( int argc, char* argv[] ) {
     std::array<std::uint8_t,3000> palette_blue;
     init_palette<2000>( palette_red, palette_green, palette_blue );
 
-    std::array<std::size_t,280> fire{ 0 };
+    std::array<std::size_t,140> fire{ 0 };
 
-    std::array<std::uint8_t,300> frame_g;
-    std::array<std::uint8_t,300> frame_r;
-    std::array<std::uint8_t,300> frame_b;
+    std::array<std::uint8_t,140> frame_g;
+    std::array<std::uint8_t,140> frame_r;
+    std::array<std::uint8_t,140> frame_b;
 
     std::mt19937 rd;
-    std::uniform_int_distribution dist{ 0, 15 };
+    std::uniform_int_distribution dist{ 0, 30 };
 
     led::ws2812b dev( *pwb_1 );
     while ( true ) {
         if ( run ) {
             effect::doom_fire(
                 fire.begin(),
-                fire.begin() + 140,
+                fire.begin() + 70,
                 3000-1,
                 rd,
                 dist
             );
             effect::doom_fire(
                 fire.rbegin(),
-                fire.rbegin() + 140,
+                fire.rbegin() + 70,
                 3000-1,
                 rd,
                 dist
@@ -115,7 +115,7 @@ int main( int argc, char* argv[] ) {
                 fire.cend(),
                 palette_blue.cbegin()
             );
-            dev.write_range( frame_g.cbegin(), frame_r.cbegin(), frame_b.cbegin(), frame_g.size() );
+            dev.write_range( frame_g.cbegin(), frame_r.cbegin(), frame_b.cbegin(), fire.size() );
 
             run = false;
         } else {
