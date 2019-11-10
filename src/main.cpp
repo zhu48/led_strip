@@ -35,13 +35,12 @@ void init_palette(
         std::numeric_limits<T>::max()/5
     >( cycle_size / 4 );
 
-    auto r_end = std::copy_n( cycle.cbegin(), cycle_size/2, red.begin() );
-    auto g_end = vop::sample<2>( green.begin(), cycle.cbegin(), cycle.cbegin() + cycle_size/2 );
-    auto b_end = vop::sample<1>( blue.begin(), cycle.cbegin(), cycle.cbegin() + cycle_size/2 );
+    auto r_end = vop::sample<2>( red.begin(), cycle.cbegin(), cycle.cbegin() + cycle_size/2 );
+    auto g_end = vop::sample<1>( green.begin(), cycle.cbegin(), cycle.cbegin() + cycle_size/2 );
 
     std::fill( r_end, red.end(), 0 );
     std::fill( g_end, green.end(), 0 );
-    std::fill( b_end, blue.end(), 0 );
+    std::fill( blue.begin(), blue.end(), 0 );
 }
 
 template<typename T>
