@@ -43,17 +43,6 @@ void init_palette(
     std::fill( blue.begin(), blue.end(), 0 );
 }
 
-template<typename T>
-void do_average( T& arr ) {
-    for ( gsl::index i = 0; i < arr[0]->size(); ++i ) {
-        typename std::remove_reference_t<decltype(*arr[0])>::value_type sum = 0;
-        for ( gsl::index j = 1; j < arr.size(); ++j ) {
-            sum += (*arr[j])[i];
-        }
-        (*arr[0])[i] = sum / (arr.size()-1);
-    }
-}
-
 void iterate() {
     if ( portable::systick::uptime() >= next_run_time ) {
         run = true;
